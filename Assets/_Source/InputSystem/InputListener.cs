@@ -13,7 +13,8 @@ namespace InputSystem
         private void Awake()
         {
             _playerInvoker = new PlayerInvoker(player);
-            PlayerCollisionDetector.CreateComponent(player.gameObject,_playerInvoker, player.EnemyBulletLayer);
+            player.gameObject.AddComponent<PlayerCollisionDetector>()
+                .Initialize(_playerInvoker, player.EnemyBulletLayer);
         }
     
         private void Update()

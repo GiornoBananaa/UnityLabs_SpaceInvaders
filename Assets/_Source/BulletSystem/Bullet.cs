@@ -32,7 +32,6 @@ namespace BulletSystem
         
         private void OnCollisionEnter2D(Collision2D other)
         {
-            Debug.Log(gameObject.layer);
             Destroy(gameObject);
         }
     }

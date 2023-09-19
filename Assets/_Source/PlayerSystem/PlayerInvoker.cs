@@ -1,3 +1,4 @@
+using UISystem;
 using UnityEngine;
 
 namespace PlayerSystem
@@ -14,9 +15,9 @@ namespace PlayerSystem
             _player = player;
             _playerMovement = new PlayerMovement(_player.PlayerBorderMinX,_player.PlayerBorderMaxX);
             _playerCombat = new PlayerCombat();
-            _playerHealth = new PlayerHealth(_player.MaxHealth,_player.MaxLives);
+            _playerHealth = new PlayerHealth(_player.MaxHealth,_player.MaxLives, player.PlayerHud,player.GameState);
         }
-
+        
         public void Move(Vector3 moveDirection)
         {
             _playerMovement.Move(_player.transform, _player.MovementSpeed, moveDirection);

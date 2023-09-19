@@ -1,3 +1,5 @@
+using GameSystem;
+using UISystem;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,5 +15,7 @@ namespace PlayerSystem
         [field: SerializeField] public LayerMask EnemyBulletLayer { get; private set; }
         [field: SerializeField] public Transform FirePoint { get; private set; }
         [field: SerializeField] public GameObject BulletPrefab { get; private set; }
+        [field: SerializeField] public PlayerHUD PlayerHud { get; private set; }
+        [field: SerializeField] public GameState GameState { get; private set; }
     }
 }

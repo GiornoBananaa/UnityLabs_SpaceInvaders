@@ -9,12 +9,10 @@ namespace PlayerSystem
         private PlayerInvoker _playerInvoker;
         private LayerMask _enemyBulletMask;
         
-        public static PlayerCollisionDetector CreateComponent (GameObject gameObject, PlayerInvoker playerInvoker, LayerMask enemyBulletMask)
+        public void Initialize (PlayerInvoker playerInvoker, LayerMask enemyBulletMask)
         {
-            PlayerCollisionDetector detector = gameObject.AddComponent<PlayerCollisionDetector>();
-            detector._playerInvoker = playerInvoker;
-            detector._enemyBulletMask = enemyBulletMask;
-            return detector;
+            _playerInvoker = playerInvoker;
+            _enemyBulletMask = enemyBulletMask;
         }
 
         private void OnCollisionEnter2D(Collision2D other)

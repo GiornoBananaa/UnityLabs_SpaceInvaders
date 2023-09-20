@@ -6,20 +6,20 @@ namespace PlayerSystem
     public class PlayerHealth
     {
         private readonly PlayerHUD _playerHUD;
-        private readonly GameState _gameState;
+        private readonly Game _game;
         private int _hp;
         private int _livesCount;
         private int _hpMax;
         private int _livesCountMax;
     
-        public PlayerHealth(int hp,int livesCount, PlayerHUD playerHUD, GameState gameState)
+        public PlayerHealth(int hp,int livesCount, PlayerHUD playerHUD, Game game)
         {
             _hp = hp;
             _hpMax = hp;
             _livesCount = livesCount;
             _livesCountMax = livesCount;
             _playerHUD = playerHUD;
-            _gameState = gameState;
+            _game = game;
             UpdateHealthHUD();
         }
     
@@ -41,7 +41,7 @@ namespace PlayerSystem
             
             if (_livesCount == 0)
             {
-                _gameState.Lose();
+                _game.Lose();
             }
             else
             {
@@ -52,7 +52,7 @@ namespace PlayerSystem
 
         private void UpdateHealthHUD()
         {
-            _playerHUD.UpdateHealthHUD( _hp, _livesCount);
+            _playerHUD.UpdateHealthHUD( _hp,_hpMax, _livesCount);
         }
     }
 }

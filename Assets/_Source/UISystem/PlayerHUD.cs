@@ -1,8 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UISystem
 {
@@ -10,7 +10,7 @@ namespace UISystem
     {
         
         [Header("HP")]
-        [SerializeField] private TMP_Text hpText; 
+        [SerializeField] private Slider hpSlider; 
         [SerializeField] private GameObject liveImage; 
         [SerializeField] private GameObject liveImageGroup; 
         [Space(3)]
@@ -24,10 +24,10 @@ namespace UISystem
             _liveImages = new List<GameObject>();
         }
 
-        public void UpdateHealthHUD(int hp, int livesCount)
+        public void UpdateHealthHUD(int hp, int hpMax, int livesCount)
         {
-            hpText.text = hp.ToString();
-            
+            hpSlider.maxValue = hpMax;
+            hpSlider.value = hp;
             while (_liveImages.Count != livesCount)
             {
                 if (_liveImages.Count < livesCount)

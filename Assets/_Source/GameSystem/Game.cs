@@ -1,11 +1,10 @@
-using System;
 using UISystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace GameSystem
 {
-    public class GameState : MonoBehaviour
+    public class Game : MonoBehaviour
     {
         [SerializeField] private EndPanel winPanel;
         [SerializeField] private EndPanel losePanel;

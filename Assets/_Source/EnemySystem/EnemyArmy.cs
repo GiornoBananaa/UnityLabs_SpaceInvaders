@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameSystem;
 using UISystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace EnemySystem
 {
@@ -13,7 +14,7 @@ namespace EnemySystem
         [SerializeField] private int columns;
         [SerializeField] private float spacing;
     
-        [Space(3)]
+        [Space(2)]
         [Header("Movement")]
         [SerializeField] private float speed;
         [SerializeField] private float endYLine;
@@ -21,16 +22,17 @@ namespace EnemySystem
         [SerializeField] private float yMoveBeforeRotation;
         [SerializeField] private float xCenterOfPath;
 
-        [Space(3)] 
+        [Space(2)] 
         [Header("Other")]
         [SerializeField] private PlayerHUD playerHUD;
-        [SerializeField] private GameState gameState;
+        [FormerlySerializedAs("gameState")] [SerializeField] private Game game;
     
         private int _enemyCount;
+        private bool _gameIsStopped;
         private Vector2 _offset;
+        private Vector2[][] _enemyPositions;
         private EnemyArmyMovement _enemyArmyMovement;
         private Queue<Enemy>[] _enemies;
-        private Vector2[][] _enemyPositions;
     
         private void Start()
         {
@@ -40,16 +42,34 @@ namespace EnemySystem
             GenerateArmy();
 
             ActivateShootingInFrontRow();
+            
             _enemyCount = rows*columns;
+            _gameIsStopped = false;
         }
 
         private void Update()
         {
-            CheckHeight();
+            if(!_gameIsStopped)CheckHeight();
             _enemyArmyMovement.Move();
         }
-    
-        public void ActivateShootingInFrontRow()
+
+        public void KillEnemy(int enemyColumn)
+        {
+            Enemy enemy = _enemies[enemyColumn].Dequeue();
+            if (enemy is null) return;
+        
+            Destroy(enemy.gameObject);
+            _enemyCount--;
+            playerHUD.UpdateScoreHUD(rows*columns - _enemyCount);
+            
+            if (_enemyCount <= 0)
+            {
+                game.Win();
+            }
+            ActivateShootingInFrontRow();
+        }
+        
+        private void ActivateShootingInFrontRow()
         {
             foreach(Queue<Enemy> enemies in _enemies)
             {
@@ -61,36 +81,20 @@ namespace EnemySystem
                 }
             }
         }
-
-        public void KillEnemy(int enemyColumn)
-        {
-            Enemy enemy = _enemies[enemyColumn].Dequeue();
         
-            if (enemy is null) return;
-        
-            Destroy(enemy.gameObject);
-            
-            _enemyCount--;
-            
-            playerHUD.UpdateScoreHUD(rows*columns - _enemyCount);
-            
-            if (_enemyCount <= 0)
-            {
-                gameState.Win();
-            }
-            ActivateShootingInFrontRow();
-        }
-    
         private void CheckHeight()
         {
+            //TODO использовать колизию для проверки высоты
             if (transform.position.y <= endYLine)
             {
-                gameState.Lose();
+                game.Lose();
+                _gameIsStopped = true;
             }
         }
 
         private void GenerateArmy()
         {
+            
             _offset = new Vector2(spacing*columns/2f - 0.5f,spacing*rows/2f - 0.5f);
             _enemies = new Queue<Enemy>[columns];
             for(int column = 0; column < columns; column++)

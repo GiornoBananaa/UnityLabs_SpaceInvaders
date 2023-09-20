@@ -1,5 +1,3 @@
-using System;
-using BulletSystem;
 using UnityEngine;
 
 namespace PlayerSystem

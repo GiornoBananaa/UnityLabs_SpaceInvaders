@@ -1,5 +1,4 @@
-﻿using System;
-using GameSystem;
+﻿using GameSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ namespace UISystem
         [SerializeField] private GameObject panel;
         [SerializeField] private Button restartButton;
 
-        private GameState _gameState;
+        private Game _game;
         
         private void Start()
         {
@@ -24,12 +23,12 @@ namespace UISystem
         
         public void RestartButton()
         {
-            _gameState.Restart();
+            _game.Restart();
         }
 
-        public void Initialize(GameState gameState)
+        public void Initialize(Game game)
         {
-            _gameState = gameState;
+            _game = game;
         }
     }
 }

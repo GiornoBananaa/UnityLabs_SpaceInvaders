@@ -21,6 +21,7 @@ namespace InputSystem
         {
             ReadMove();
             ReadShoot();
+            ReadRestart();
         }
     
         private void ReadMove()
@@ -37,6 +38,14 @@ namespace InputSystem
             if (Input.GetKeyDown(shootKey))
             {
                 _playerInvoker.Shoot();
+            }
+        }
+        
+        private void ReadRestart()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                player.Game.Restart();
             }
         }
     }

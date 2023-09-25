@@ -52,6 +52,9 @@ MonoBehaviour:
   playerBulletLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  endBorderMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!212 &4465337685132441344
 SpriteRenderer:
   m_ObjectHideFlags: 0

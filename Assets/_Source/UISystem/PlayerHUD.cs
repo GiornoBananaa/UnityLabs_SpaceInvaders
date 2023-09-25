@@ -8,7 +8,6 @@ namespace UISystem
 {
     public class PlayerHUD : MonoBehaviour
     {
-        
         [Header("HP")]
         [SerializeField] private Slider hpSlider; 
         [SerializeField] private GameObject liveImage; 

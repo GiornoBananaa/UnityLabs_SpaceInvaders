@@ -17,8 +17,8 @@ namespace EnemySystem
         [Space(2)]
         [Header("Movement")]
         [SerializeField] private float speed;
-        [SerializeField] private float endYLine;
-        [SerializeField] private float maxXStep;
+        [SerializeField] private float pauseBetweenSteps;
+        [SerializeField] private float xBorder;
         [SerializeField] private float yMoveBeforeRotation;
         [SerializeField] private float xCenterOfPath;
 
@@ -28,7 +28,7 @@ namespace EnemySystem
         [FormerlySerializedAs("gameState")] [SerializeField] private Game game;
     
         private int _enemyCount;
-        private bool _gameIsStopped;
+        private bool _gameIsEnded;
         private Vector2 _offset;
         private Vector2[][] _enemyPositions;
         private EnemyArmyMovement _enemyArmyMovement;
@@ -36,20 +36,19 @@ namespace EnemySystem
     
         private void Start()
         {
-            _enemyArmyMovement = new EnemyArmyMovement(transform,
-                speed,maxXStep,yMoveBeforeRotation,xCenterOfPath);
+            _enemyArmyMovement = new EnemyArmyMovement(transform, speed, 
+                pauseBetweenSteps, xBorder, yMoveBeforeRotation, xCenterOfPath);
         
             GenerateArmy();
 
             ActivateShootingInFrontRow();
             
             _enemyCount = rows*columns;
-            _gameIsStopped = false;
+            _gameIsEnded = false;
         }
 
         private void Update()
         {
-            if(!_gameIsStopped)CheckHeight();
             _enemyArmyMovement.Move();
         }
 
@@ -82,14 +81,11 @@ namespace EnemySystem
             }
         }
         
-        private void CheckHeight()
+        public void ReachEnd()
         {
-            //TODO использовать колизию для проверки высоты
-            if (transform.position.y <= endYLine)
-            {
+            if(!_gameIsEnded)
                 game.Lose();
-                _gameIsStopped = true;
-            }
+            _gameIsEnded = true;
         }
 
         private void GenerateArmy()

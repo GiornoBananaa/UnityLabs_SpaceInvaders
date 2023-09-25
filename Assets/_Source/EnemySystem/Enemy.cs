@@ -7,6 +7,7 @@ namespace EnemySystem
         [SerializeField] private Transform firePoint;
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private LayerMask playerBulletLayerMask;
+        [SerializeField] private LayerMask endBorderMask;
         private bool _canShoot;
         private float _timeBeforeShoot;
         private int _enemyColumn;
@@ -17,7 +18,7 @@ namespace EnemySystem
         {
             _timeBeforeShoot = Random.Range(0.6f,3);
             _enemyCombat = new EnemyCombat();
-            gameObject.AddComponent<EnemyCollisionDetector>().Initialize(this, playerBulletLayerMask);
+            gameObject.AddComponent<EnemyCollisionDetector>().Initialize(this, playerBulletLayerMask, endBorderMask);
         }
 
         private void Update()
@@ -40,6 +41,11 @@ namespace EnemySystem
             _enemyArmy.KillEnemy(_enemyColumn);
         }
         
+        public void ReachEnd()
+        {
+            _enemyArmy.ReachEnd();
+        }
+        
         public void ActivateShooting()
         {
             _canShoot = true;
@@ -55,7 +61,6 @@ namespace EnemySystem
 
         private void Shoot()
         {
-            
             _timeBeforeShoot = Random.Range(0.6f,3);
             _enemyCombat.Shoot(firePoint,bulletPrefab);
         }

@@ -16,8 +16,8 @@ namespace PlayerSystem
         {
             _hp = hp;
             _hpMax = hp;
-            _livesCount = livesCount;
             _livesCountMax = livesCount;
+            _livesCount = _livesCountMax;
             _playerHUD = playerHUD;
             _game = game;
             UpdateHealthHUD();
